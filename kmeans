@@ -9,7 +9,7 @@
 
 #First of all, the algorithm sets a subspace taking the limits of each variable as bounds (x1, x2, ... , xp)
 #Then, k (number of centroids) points are selected randomly inside this subspace.
-#The next step is to compute the distances between each centroid and all the point of the dataset.
+#The next step is to compute the distances between each centroid and all the points of the dataset.
 #Then, I relate each point to the closest centroid, creating a cluster, using a distance measurement.
 #Once all the points are related to its respective centroid, I compute the mean point for each variable in each cluster.
 #And I get a new position for the centroid.
@@ -24,7 +24,7 @@ m times, and I choose that configuration with the minimum distance at the end of
 #The number of centroids by default is 2, but the parameter can be changed to any number
 #It has three kinds of distances measurements (Euclidean, Euclidean squared and Manhattan)
 #The number of iterations is set to 50 by default
-#It has also initial configurations in order to launch the optimal number of centroids
+#It has also initial configurations in order to launch the optimal position of centroids at the beginning
 
 #Future improvements
 
