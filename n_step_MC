@@ -1,4 +1,4 @@
-n_state_MC <- function(n, alpha, tm, states=0){
+n_step_MC <- function(n, alpha, tm, states=0){
 
 #Arguments:
   #n number of steps
@@ -56,7 +56,7 @@ if(states==0){
     print(aux)
     output[[i]] <- aux
   }
-    n_stepsMC <<- output
+    nstepMC <<- output
 }
 
 #testing
@@ -65,4 +65,4 @@ tm <- A
 alpha2 <- alpha1
 state <- c("A", "B", "C", "D")
 
-n_state_MC(15, alpha2, tm, state)
+n_step_MC(15, alpha2, tm, state)
