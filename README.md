@@ -6,4 +6,4 @@ List of functions:
 
   - Kmeans algorithm
   - Markov Chain n_steps
-  - Power of squared matrices
+  - Power of square matrix
