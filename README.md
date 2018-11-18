@@ -5,5 +5,5 @@ The purpose of this repository is to show some usefull function based on popular
 List of functions:
 
   - Kmeans algorithm
-  - Markov Chain n_state vector
+  - Markov Chain n_steps
   - Power of squared matrices
