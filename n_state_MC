@@ -1,0 +1,68 @@
+n_state_MC <- function(n, alpha, tm, states=0){
+
+#Arguments:
+  #n number of steps
+  #alpha is th vector of initial probabilities
+  #tm is the transition matrix
+  #states is a vector with the labels of each state
+  
+#Output:
+  #The function returns a list with each vector of states, from 0 to n
+
+#Checking the sizes of the arguments
+if(length(states)!=ncol(tm) && ncol(tm) != nrow(tm)){
+    print("Error: Size of the arguments is not consistent")
+    break()
+}
+
+#Checking the sum of the probabilities vector is 1
+  
+if(sum(alpha)!=1){
+    print("Error: The initial probabilities vector does not add 1")
+  break()
+}
+
+#Checking if the transition matrix is stochastic
+check <- 0
+for(i in 1:nrow(tm)){
+  check[i] <- sum(tm[i,])
+}
+if(check[i]!=1){
+  print("Error: The transition matrix is not stochastic")
+  break()
+}
+
+#Checking the states vector is set by default
+if(states==0){
+  print("No states vector, will be set by default")
+  states <- 0
+  for(i in 1:ncol(tm)){
+    states[i] <- paste("State", i, sep="")
+  }
+}
+
+#Print and store all the elements
+    
+    output <- list()
+    aux <- vector("numeric", length = ncol(tm))
+    aux <- as.vector(round(alpha %*% tm, digits = 5))
+    names(aux) <- states
+    print(aux)
+    output[[1]] <- aux
+    
+  for(i in 2:n){
+    aux <- as.vector(round(alpha %*% matpow(tm, i), digits = 5))
+    names(aux) <- states
+    print(aux)
+    output[[i]] <- aux
+  }
+    n_stepsMC <<- output
+}
+
+#testing
+
+tm <- A
+alpha2 <- alpha1
+state <- c("A", "B", "C", "D")
+
+n_state_MC(15, alpha2, tm, state)
