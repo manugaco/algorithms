@@ -47,7 +47,6 @@ if(states==0){
     aux1 <- as.vector(round(alpha %*% tm, digits = 5))
     names(aux1) <- states
     out[[1]] <- aux1
-    p <- 0
     if(n > 1){
       for(i in 2:n){
         aux <- as.vector(round(alpha %*% matpow(tm, i), digits = 5))
