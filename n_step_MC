@@ -34,35 +34,33 @@ if(check[i]!=1){
 
 #Checking the states vector is set by default
 if(states==0){
-  print("No states vector, will be set by default")
+  print("No states vector, it is set by default")
   states <- 0
   for(i in 1:ncol(tm)){
-    states[i] <- paste("State", i, sep="")
+    states[i] <- paste("State", i, sep=" ")
   }
 }
 
 #Print and store all the elements
+    out <- list()
+    aux1 <- vector("numeric", length = ncol(tm))
+    aux1 <- as.vector(round(alpha %*% tm, digits = 5))
+    names(aux1) <- states
+    out[[1]] <- aux1
+    p <- 0
+    if(n > 1){
+      for(i in 2:n){
+        aux <- as.vector(round(alpha %*% matpow(tm, i), digits = 5))
+        names(aux) <- states
+        out[[i]] <- aux
+      }
+    }
     
-    output <- list()
-    aux <- vector("numeric", length = ncol(tm))
-    aux <- as.vector(round(alpha %*% tm, digits = 5))
-    names(aux) <- states
-    print(aux)
-    output[[1]] <- aux
+    if(n==1){
+      print(aux1)
+    }else{
+      print(aux)
+    }
     
-  for(i in 2:n){
-    aux <- as.vector(round(alpha %*% matpow(tm, i), digits = 5))
-    names(aux) <- states
-    print(aux)
-    output[[i]] <- aux
-  }
-    nstepMC <<- output
+    nstepMC <<- out
 }
-
-#testing
-
-tm <- A
-alpha2 <- alpha1
-state <- c("A", "B", "C", "D")
-
-n_step_MC(15, alpha2, tm, state)
