@@ -1,7 +1,7 @@
-n_step_MC <- function(n, alpha, tm, states=0){
+n_states_MC <- function(n, alpha, tm, states=0){
 
 #Arguments:
-  #n number of steps
+  #n number of periods
   #alpha is th vector of initial probabilities
   #tm is the transition matrix
   #states is a vector with the labels of each state
@@ -61,5 +61,5 @@ if(states==0){
       print(aux)
     }
     
-    nstepMC <<- out
+    nstateMC <<- out
 }
