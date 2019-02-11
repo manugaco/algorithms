@@ -8,3 +8,4 @@ List of functions:
   - Finite-state Discrete Markov Chain n_states vector
   - Finite-state Discrete Markov Chain n_step vector
   - Power of square matrix
+  - Moving Histogram (kernel density estimation)
