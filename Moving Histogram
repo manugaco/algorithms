@@ -1,5 +1,8 @@
 #Kernel density estimation
 
+#The function takes three arguments: the evaluation points (x), the sample (X) and the bandwidth (h).
+#The output is a chart with the moved histogram and the density of the data.
+
 moving_histogram <- function(x,X,h){
   n <- length(X)
   y <- c()
