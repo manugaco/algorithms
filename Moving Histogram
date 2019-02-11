@@ -1,0 +1,24 @@
+#Kernel density estimation
+
+moving_histogram <- function(x,X,h){
+  n <- length(X)
+  y <- c()
+  
+  for(j in 1:n){
+    y <- sum((x[j] - h) <= X & (x[j] + h) >= X)
+    f_hat[j] <- y/(2*n*h)
+  }
+
+  df <- data.frame(f_hat)
+  df <- cbind(x, df, X)
+  colnames(df) <- c("x", "y", "d")
+  p <- ggplot(df) + geom_step(aes(x=x, y=y)) + geom_density(aes(x=d)) + theme_bw() + xlim((min(X)-1), (max(X)+1))
+  return(p)
+}
+
+sam = 100
+X <- rnorm(sam, 0, 1)
+x <- seq(min(X),max(X), len = sam)
+h <- 0.5
+
+moving_histogram(x,X,h)
