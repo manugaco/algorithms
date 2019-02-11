@@ -1,6 +1,6 @@
 # Algorithms
 
-The purpose of this repository is to show some usefull function based on popular algorithms
+The purpose of this repository is to create some usefull function based on popular algorithms, with the aim of practice programming and implement the mathematics behind these methods.
 
 List of functions:
 
