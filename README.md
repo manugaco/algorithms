@@ -4,7 +4,8 @@ The purpose of this repository is to create some usefull function based on popul
 
 List of functions:
 
-  - K-means algorithm
+  - K-means
+  - Knn
   - Finite-state Discrete Markov Chain n_states vector
   - Finite-state Discrete Markov Chain n_step vector
   - Power of square matrix
