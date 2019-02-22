@@ -1,5 +1,12 @@
 #This is the implementation of the metropolis algorithm in a logistic regression hierarquical problem with bayesian approach.
 
+#This is the latex code of the hierarquical model:
+
+$$Y \mid X, \theta \sim Bern(\theta)$$
+$$logit(\theta) = log\left(\frac{\theta}{1-\theta}\right) = \alpha + \beta \ x$$
+$$\alpha \sim N(0,5)$$
+$$\beta \sim N(0,2)$$
+
 #Defining the data
 y = c(1, 0, 1, 1, 0, 0)
 x = c(3, 5, 2, 5, 10, 6)
