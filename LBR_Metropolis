@@ -1,3 +1,5 @@
+#This is the implementation of the metropolis algorithm in a logistic regression hierarquical problem with bayesian approach.
+
 #Defining the data
 y = c(1, 0, 1, 1, 0, 0)
 x = c(3, 5, 2, 5, 10, 6)
