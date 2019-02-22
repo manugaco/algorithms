@@ -1,5 +1,7 @@
 #Kernel density estimation
 
+#Moving histogram algorithm
+
 #The function takes three arguments: the evaluation points (x), the sample (X) and the bandwidth (h).
 #The output is a chart with the moved histogram and the density of the data.
 
