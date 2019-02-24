@@ -1,6 +1,6 @@
 #Kernel density estimation
 
-#Moving histogram algorithm
+#Moving histogram algorithm (Naive density estimator)
 
 #The function takes three arguments: the evaluation points (x), the sample (X) and the bandwidth (h).
 #The output is a grid chart with a comparison between a regular histogram, kde and the moved histogram, 
