@@ -4,7 +4,7 @@ The purpose of this repository is to create some usefull function based on popul
 
 List of functions:
 
-  - K-means (R)
+  - K-means (R and Python)
   - Knn (C++ and Python)
   - Logistic hierarquical model, bayesian approach (Metropolis MCMC) (R)
   - Finite-state Discrete Markov Chain n_states vector (R)
