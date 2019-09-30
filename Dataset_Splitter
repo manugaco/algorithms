@@ -35,6 +35,8 @@ sex <- rbinom(nrow(iris), 1, 0.5)
 data <- cbind(data, class, sex)
 group <- c("Species", "class", "sex")
 
+#Benchmark
+
 for(i in 1:50){
   ini <- Sys.time()
   splitDF(data, group)
