@@ -1,5 +1,5 @@
 
-#The algorithm is designed to perform split validation automatically.
+#The algorithm is designed to perform split validation automatically, but it also works over the whole dataset.
 #it works by selecting those "k" closests points to each on the test set, and it does select and assign the most repeated category
 #to the corresponding point on the test set.
 #It prints the confusion matrix and some accuracy metrics if required (TRUE by default).
