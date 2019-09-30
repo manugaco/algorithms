@@ -1,9 +1,9 @@
 
 #The algorithm is designed to perform split validation automatically, but it also works over the whole dataset.
 #it works by selecting those "k" closests points to each on the test set, and it does select and assign the most repeated category
-#to the corresponding point on the test set.
-#It prints the confusion matrix and some accuracy metrics if required (TRUE by default).
-#If the confusion matrix is not squared, it does not print the previous information.
+#to the corresponding point on the test set (or in the whole dataset).
+#It prints the confusion matrix and some accuracy metrics if required (TRUE by default), unless the confusion matrix is not squared.
+#Then, it does not print the previous information.
 
 
 #I have used the Iris dataset as an example.
