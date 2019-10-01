@@ -1,4 +1,4 @@
-#K-means implementation in Python (v3.6).
+# K-means implementation in Python (v3.6).
 #
 # - First, I have made a function to generate data (normaly distributed)
 # - Then I have implemented the k-means algorithm in a function, with three three different distances.
