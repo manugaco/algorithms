@@ -25,11 +25,11 @@ import math
 #Function
 
 def kmeans_manu(data, k, niter = 50, dist = "euclidean", plot_PCA = False):
+     
+     col = data.shape[1]
+     nrow = data.shape[0]
     
     if dist == "euclidean":
-        
-        ncol = data.shape[1]
-        nrow = data.shape[0]
         
         #Initial centroids
         
@@ -86,9 +86,6 @@ def kmeans_manu(data, k, niter = 50, dist = "euclidean", plot_PCA = False):
 
     if dist == "euclidean squared":
         
-        ncol = data.shape[1]
-        nrow = data.shape[0]
-        
         #Initial centroids
         
         cent_ls = []
@@ -139,9 +136,6 @@ def kmeans_manu(data, k, niter = 50, dist = "euclidean", plot_PCA = False):
         return(cent_ls, data_c)
         
     if dist == "manhattan":
-        
-        ncol = data.shape[1]
-        nrow = data.shape[0]
         
         #Initial centroids
         
