@@ -15,7 +15,7 @@
 #And I get a new position for the centroid.
 #This process is repeated n times (can be improved)
 #It can happen that a centroid may not find any point close to it, to solve this, I repeate the process of launching centroids
-m times, and I choose that configuration with the minimum distance at the end of the previous process
+#m times, and I choose that configuration with the minimum distance at the end of the previous process
 #This procedure also gives me a better best accurary computing the centroids
 
 ##Features
