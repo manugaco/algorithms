@@ -19,14 +19,15 @@ conditions_fun <- function(x){
   for (i in 1:length(MI_vect_last)){
     
     vect <- MI_vect_last[i]
-    #Cond:1 Add U if string ends in I
+    
+    #Rule 1: Add U to the end of any string ending in I
     
     tl <- nchar(vect)
     if (substr(vect, tl, tl)  == 'I') {
       aux <-c(aux, as.vector(paste0(vect, 'U')))
     }
     
-    #Cond2: Double string after M
+    #Rule 2: Double the string after the M
     
     for (j in 1:nchar(vect)) {
       if(substr(vect, j, j) == 'M') {
@@ -34,7 +35,7 @@ conditions_fun <- function(x){
       }
     }
     
-    #Cond3: Replace any III with a U
+    #Rule 3: Replace any III with a U
     
     vaux <- unlist(strsplit(vect, ""))
     for(j in 1:length(vaux)) {
@@ -50,7 +51,7 @@ conditions_fun <- function(x){
       }
     }
     
-    #Cond4: Remove any UU
+    #Rule 4: Remove any UU
     
     aux3 <- c()
     for(j in 1:length(vaux)) {
