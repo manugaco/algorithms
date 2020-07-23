@@ -10,15 +10,14 @@
 #Function with conditions
 
 conditions_fun <- function(x){
-  
-  MI_vect_last <- x
+
   #define output vector
   
   aux <- c()
   
-  for (i in 1:length(MI_vect_last)){
+  for (i in 1:length(x)){
     
-    vect <- MI_vect_last[i]
+    vect <- x[i]
     
     #Rule 1: Add U to the end of any string ending in I
     
