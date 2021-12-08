@@ -6,8 +6,8 @@ import sys
 
 ## Testing dataset:
 
-X = np.array([[0, 0, 1, 0], [1, 0, 0, 1], [1, 0, 1, 0]])
-df = pd.DataFrame(X).rename(columns={0:'target', 1:'A', 2:'B', 3:'C'})
+X = np.array([[0, 0, 1, 0, 0], [1, 0, 0, 1, 1], [1, 0, 1, 0, 1], [0, 0, 1, 1, 0]])
+df = pd.DataFrame(X).rename(columns={0:'target', 1:'A', 2:'B', 3:'C', 4:'D'})
 
 # Activation functions:
 
@@ -129,7 +129,9 @@ def neural_network_python(data, target_name, params):
 
 out, loss = neural_network_python(df, 'target', params)
 
+print(df['target'])
 
+print(out)
 
 
 
