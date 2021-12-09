@@ -10,7 +10,7 @@ List of folders:
 
 - Data Structures algorithms:
 
-  - Power of square matrix (R)
+  - Power of square matrix (R, Python)
   - Split dataframe function (R)
 
 - Machine Learning Supervised algorithms:
@@ -22,7 +22,7 @@ List of folders:
  
 - Neural Networks algorithms:
 
-  - Multilayer perceptron algorihm (R, python)
+  - Multilayer perceptron algorihm (R, Python)
 
 - Kernel Density algorithms:
 
@@ -37,7 +37,7 @@ List of folders:
 
 - Other algorithms:
 
-  - Godel, Escher and Bach, MIMU problem algorithm (python)
+  - Godel, Escher and Bach, MIMU problem algorithm (Python)
 
 
 
