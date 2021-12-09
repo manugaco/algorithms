@@ -13,8 +13,8 @@ List of folders:
 
 - Machine Learning Unsupervised algorithms:
 
-  - K-means (R, Python)
-  - Knn (R, Python)
+  - K-means algorithm (R, Python)
+  - Knn algorithm (R, Python)
  
 - Neural Networks algorithms:
 
