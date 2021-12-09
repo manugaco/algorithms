@@ -1,3 +1,5 @@
+## Neural Network from scratch in python language:
+
 ## Libraries
 
 import numpy as np
@@ -6,8 +8,8 @@ import sys
 
 ## Testing dataset:
 
-X = np.array([[0, 0, 1, 0, 0], [1, 0, 0, 1, 1], [1, 0, 1, 0, 1], [0, 0, 1, 1, 0]])
-df = pd.DataFrame(X).rename(columns={0:'target', 1:'A', 2:'B', 3:'C', 4:'D'})
+X = np.array([[0, 0, 1, 1], [1, 0, 1, 0], [0, 0, 0, 1]])
+y = np.array([[1], [1], [0]])
 
 # Activation functions:
 
@@ -15,51 +17,26 @@ def sigmoid(x):
     return 1/(1+np.exp(-x))
     
 def d_sigmoid(x):
-    return x*(1-x)
+    return sigmoid(x)*(1-sigmoid(x))
 
 ## Parameters (dictionary):
 
-params = {'epoch': 50000,
+params = {'epoch': 5000,
          'learning_rate': 0.1,
-         'n_hidden_layers':10,
+         'n_hidden_layers':3,
          'n_output_layers':1}
-
-
-params
 
 ## Algorithm main function:
 
-def neural_network_python(data, target_name, params):
+def neural_network_python( y, X params):
     
     ## Function inputs format sanity checks:
     
-    if isinstance(df, pd.DataFrame):
-        print("Sanity check 1: Data is a pandas dataframe.")
-    else:
-        sys.exit("Sanity check 1: Data is in incorrect format, please use pandas dataframe instead.")
-    
-    if isinstance(target_name, str):
-        print("Sanity check 2: Target name is a string.")
-    else:
-        sys.exit("Sanity check 2: Target name is in incorrect format, please use string instead.")
-    
     if isinstance(params, dict):
-        print("Sanity check 3: Params is a dictionary.")
+        print("Sanity check 1: Params is a dictionary.")
     else:
-        sys.exit("Sanity check 3: Params is in incorrect format, please use dictionary instead.")
-    
-    ## Data format sanity check:
-    
-    if len([data[col].dtype for col in data.columns if data[col].dtype not in [int, float, np.int64, np.float64]])==0:
-        print("Sanity check 4: Columns are in correct format types.")
-    else:
-        sys.exit("Sanity check 4: All Columns must be numeric types, please transform non numerical variables.")
-    
-    ## Data definition:
-    
-    X = np.array(data.drop(target_name, axis=1))
-    y = np.array(data[target_name])
-    
+        sys.exit("Sanity check 1: Params is in incorrect format, please use dictionary instead.")
+
     ## Parameters:
     
     ep = params.get('epoch')
@@ -127,9 +104,7 @@ def neural_network_python(data, target_name, params):
     return output, losses
 
 
-out, loss = neural_network_python(df, 'target', params)
-
-print(df['target'])
+out, loss = neural_network_python(y, X, 'target', params)
 
 print(out)
 
