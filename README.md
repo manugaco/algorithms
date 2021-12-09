@@ -22,6 +22,8 @@ List of folders:
  
  * Neural Networks algorithms:
 
+  - Multilayer perceptron algorihm (R, python)
+
  * Kernel Density algorithms:
 
   - Moving Histogram (R)
