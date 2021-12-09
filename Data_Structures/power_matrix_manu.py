@@ -16,13 +16,18 @@ def matpow(m, p):
 
     # Function body:
 
+    ls_aux = []
+    ls_aux.append(m)
 
+    for i in np.arange(1, p+1):
+        next_mat = np.matmul(m, ls_aux[i-1])
+        ls_aux.append(next_mat)
+
+    return(ls_aux[p-1])
+
+# Testing the function:
 
 mat = np.array([[1, 2, 1], [1, 3, 4], [1, 2, 3]])
 
-matpow(mat, 2)
-
-
-p=3
-p=np.array([p])
+matpow(mat, 3)
 
