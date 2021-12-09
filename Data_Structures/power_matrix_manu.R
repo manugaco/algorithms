@@ -15,7 +15,7 @@ matpow <- function(m, p){
 
   #Function body:
 
-  vec_aux <- list(p)
+  vec_aux <- list()
   vec_aux[[1]] <- m
   for(i in 2:p){
     vec_aux[[i]] <- m %*% vec_aux[[i-1]]
@@ -32,4 +32,4 @@ matpow <- function(m, p){
 
 mat <- matrix(c(1, 2, 1, 1, 3, 4, 1, 2, 3), ncol=3, nrow=3, byrow=T)
 
-matpow(mat, 2)
+matpow(mat, 3)
