@@ -28,7 +28,7 @@ params = {'epoch': 5000,
 
 ## Algorithm main function:
 
-def neural_network_python( y, X params):
+def nn_python(y, X, params):
     
     ## Function inputs format sanity checks:
     
@@ -104,7 +104,7 @@ def neural_network_python( y, X params):
     return output, losses
 
 
-out, loss = neural_network_python(y, X, 'target', params)
+out, loss = nn_python(y, X, 'target', params)
 
 print(out)
 
