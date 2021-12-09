@@ -1,8 +1,7 @@
-
-#This function works in the following way:
-  #First, it creates a matrix with all the possible combinations of the grouping variable levels.
-  #Then, it filters all the rows that match every combination and it stores in an independent matrix.
-#it uses the package prodlim to match the row combinations
+# This function works in the following way:
+# First, it creates a matrix with all the possible combinations of the grouping variable levels.
+# Then, it filters all the rows that match every combination and it stores in an independent matrix.
+# it uses the package prodlim to match the row combinations.
 
 
 splitDF <- function(data, group){
@@ -37,8 +36,10 @@ group <- c("Species", "class", "sex")
 
 #Benchmark
 
+fin <- list()
+
 for(i in 1:50){
   ini <- Sys.time()
-  splitDF(data, group)
+  df <- splitDF(data, group)
   fin[i] <- Sys.time() - ini
 }
