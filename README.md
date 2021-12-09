@@ -31,9 +31,15 @@ List of folders:
 - Statistical learning algorihtms:
 
   - Linear regression model (R)
-  - Montecarlo Simulation Metropolis algorithm (R)
+  - Multiple linear regression model (R)
   - Finite-state Discrete Markov Chain n_states vector (R)
   - Finite-state Discrete Markov Chain n_step vector (R)
+
+- Bayesian Algorithms:
+
+  - Gibbs sampling algorithm (R, Python)
+  - MCMC Metropolis algorithm (R, Python)
+  - MCMC Metropolis-Hastings algorithm (R, Python)
 
 - Other algorithms:
 
