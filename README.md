@@ -31,7 +31,7 @@ List of folders:
 - Statistical learning algorihtms:
 
   - Linear regression model (R)
-  - Logistic hierarquical model, bayesian approach (Metropolis MCMC) (R)
+  - Montecarlo Simulation Metropolis algorithm (R)
   - Finite-state Discrete Markov Chain n_states vector (R)
   - Finite-state Discrete Markov Chain n_step vector (R)
 
