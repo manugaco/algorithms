@@ -66,13 +66,23 @@ f_srl_fit <- function(df_train, target){
     y_train <- ft_list[[2]]
     b1 <- f_beta1(x_train, y_train)
     coef <- append(b1, f_beta0(x_train, y_train))
-    
+
     return(coef)
 }
 
 # Function to predict the y values given test data:
 
+f_slr_predict <- function(df_test, coef){
 
+    preds <- c()
+    x_test <- df_test[,1]
+
+    for(i in 1:length(x_test)){
+        preds[i] <- coef[2] + coef[1]*x_test[i]
+    }
+    return(preds)
+
+}
 
 # Function to get the mean squared error:
 
@@ -127,7 +137,7 @@ df_train
 x_test <- c(1, 2, 2, 1, 5)
 y_test <- c(1, 3, 2, 1, 4)
 
-df_test <- data.frame()
+df_test <- data.frame(x_test)
 
 f_mean(x)
 f_mean(y)
