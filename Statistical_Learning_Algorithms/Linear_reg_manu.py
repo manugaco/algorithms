@@ -67,12 +67,10 @@ def f_slr_predict(df_test, coef):
     
     preds = []
     x_test = np.array(df_test)
-    b0 = coef[0]
-    b1 = coef[1]
 
     for i in range(len(x_test)):
 
-        y_hat = b0 + b1*x_test[i]
+        y_hat = coef[0] + coef[1]*x_test[i]
         preds.append(y_hat[0])
 
     return preds
