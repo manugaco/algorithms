@@ -81,4 +81,30 @@ f_mse(y, y_pred)
 x <- matrix(c(2, 3, 2, 3, 5, 2, 2, 2, 6), ncol=3, nrow=3, byrow=T)
 df_test <- data.frame(x)
 
+df_train
+
+f_ols_predict(df_test, coef_fit)
+
+# Testing the functions with real world data (fit and predict):
+
+url <- 'https://raw.githubusercontent.com/manugaco/Algorithms/master/Datasets/qsar_fish_toxicity.csv'
+data <- read.csv(url, sep=',')
+head(data)
+
+# Train and test split:
+
+
+
+fit_res <- f_ols_fit(df_train, 'LC50_target')
+
+coef_fit <- fit_res[[1]]
+y_pred <- fit_res[[2]]
+data.frame(y, y_pred)
+f_mse(y, y_pred)
+
+x <- matrix(c(2, 3, 2, 3, 5, 2, 2, 2, 6), ncol=3, nrow=3, byrow=T)
+df_test <- data.frame(x)
+
+df_train
+
 f_ols_predict(df_test, coef_fit)

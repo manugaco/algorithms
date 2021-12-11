@@ -18,7 +18,7 @@ def f_mse(a, p):
         for i in range(len(a)):
             s_error.append((a[i] - p[i])**2)
 
-    return(round(f_mean(s_error)[0],4))
+    return(f_mean(s_error))
 
 # Function to fit the OLS estimator on train data:
 
@@ -66,6 +66,29 @@ f_mse(y, y_pred)
 X = np.array([[2, 3, 2], [3, 5, 2], [2, 2, 6]])
 df_test = pd.DataFrame(X).rename(columns={0:'X1', 1:'X2', 2:'X3'})
 
+df_train
 f_ols_predict(df_test, coefs)
 
+# Testing the functions with real world data (fit and predict):
 
+url = 'https://raw.githubusercontent.com/manugaco/Algorithms/master/Datasets/qsar_fish_toxicity.csv'
+data = pd.read_csv(url, sep=',')
+data.head()
+target = 'LC50_target'
+
+# Train and test split:
+
+sel = np.random.rand(len(data)) < 0.8
+
+df_train = data[sel].reset_index(drop=True)
+df_test = data[~sel].reset_index(drop=True)
+
+# Fit:
+coefs, y_pred = f_ols_reg(df_train, target)
+pd.concat([df_train[target], pd.DataFrame(y_pred).rename(columns={0:'y_pred'})], axis=1).head()
+f_mse(np.array(df_train[target].reset_index(drop=True)), y_pred)
+
+# Predict:
+result = f_ols_predict(df_test.drop(target, axis=1), coefs)
+pd.concat([df_test[target], result['y_hat']], axis=1)
+f_mse(df_test[target], result['y_hat'])
