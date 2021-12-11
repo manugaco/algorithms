@@ -61,7 +61,7 @@ f_ols_predict <- function(df_test, coefs){
     # Return the y_hat values and the features in a matrix:
     res <- cbind(X%*%coefs, X[,2:(ncol(X))])
     colnames(res) <- c(c('y_hat'), colnames(df_test))
-    return(res)
+    return(data.frame(res))
 }
 
 # Testing the functions with toy example (fit and predict):
@@ -90,21 +90,33 @@ f_ols_predict(df_test, coef_fit)
 url <- 'https://raw.githubusercontent.com/manugaco/Algorithms/master/Datasets/qsar_fish_toxicity.csv'
 data <- read.csv(url, sep=',')
 head(data)
+target <- 'LC50_target'
 
 # Train and test split:
 
+sel <- sort(sample(nrow(data), nrow(data)*.8))
+df_train <- data[sel,]
+df_test <- data[-sel,]
 
+rownames(df_train) <- NULL
+rownames(df_test) <- NULL
 
-fit_res <- f_ols_fit(df_train, 'LC50_target')
+# Fit:
 
+fit_res <- f_ols_fit(df_train, target)
 coef_fit <- fit_res[[1]]
 y_pred <- fit_res[[2]]
-data.frame(y, y_pred)
-f_mse(y, y_pred)
+head(data.frame(df_train[target][,1], y_pred[,1]))
 
-x <- matrix(c(2, 3, 2, 3, 5, 2, 2, 2, 6), ncol=3, nrow=3, byrow=T)
-df_test <- data.frame(x)
+# Predict:
 
-df_train
+result <- f_ols_predict(df_test[, names(df_test) != target], coef_fit)
+head(data.frame(df_test[target][,1], result['y_hat'][,1]))
 
-f_ols_predict(df_test, coef_fit)
+# Fit error:
+
+f_mse(as.vector(df_train[target][,1]), y_pred[,1])
+
+# Prediction error:
+
+f_mse(df_test[target][,1], result['y_hat'][,1])

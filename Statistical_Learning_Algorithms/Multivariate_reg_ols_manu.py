@@ -22,7 +22,7 @@ def f_mse(a, p):
 
 # Function to fit the OLS estimator on train data:
 
-def f_ols_reg(df_train, target):
+def f_ols_fit(df_train, target):
 
     # Shaping input:
     X = np.array(df_train.drop(target, axis=1))
@@ -59,7 +59,7 @@ df_train = pd.concat([pd.DataFrame(y).rename(columns={0:'target'}),
                                                       1:'B',
                                                       2:'C'})], axis=1)
 
-coefs, y_pred = f_ols_reg(df_train, 'target')
+coefs, y_pred = f_ols_fit(df_train, 'target')
 pd.DataFrame(y, y_pred)
 f_mse(y, y_pred)
 
@@ -79,16 +79,23 @@ target = 'LC50_target'
 # Train and test split:
 
 sel = np.random.rand(len(data)) < 0.8
-
 df_train = data[sel].reset_index(drop=True)
 df_test = data[~sel].reset_index(drop=True)
 
 # Fit:
-coefs, y_pred = f_ols_reg(df_train, target)
+
+coefs, y_pred = f_ols_fit(df_train, target)
 pd.concat([df_train[target], pd.DataFrame(y_pred).rename(columns={0:'y_pred'})], axis=1).head()
-f_mse(np.array(df_train[target].reset_index(drop=True)), y_pred)
 
 # Predict:
+
 result = f_ols_predict(df_test.drop(target, axis=1), coefs)
-pd.concat([df_test[target], result['y_hat']], axis=1)
+pd.concat([df_test[target], result['y_hat']], axis=1).head()
+
+# Fit error:
+
+f_mse(np.array(df_train[target].reset_index(drop=True)), y_pred)
+
+# Prediction error:
+
 f_mse(df_test[target], result['y_hat'])
