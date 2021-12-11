@@ -30,8 +30,8 @@ List of folders:
   
 - Statistical learning algorihtms:
 
-  - Simple Linear regression model (R)
-  - Multivariate linear regression model (R)
+  - Simple Linear regression model (R, Python)
+  - Multivariate linear regression model (R, Python)
   - Logistic regression model (R)
   - Finite-state Discrete Markov Chain n_states vector (R)
   - Finite-state Discrete Markov Chain n_step vector (R)
