@@ -42,8 +42,8 @@ knn_manu <- function(data, splitmode = TRUE, k="Auto", splitTT=0.75, Acc = TRUE)
     #Divide in train and test
     
     ind <- sample(1:nrow(data), size = round(splitTT*nrow(data)))
-    train <- dataset[ind,]
-    test <- dataset[-ind,]
+    train <- data[ind,]
+    test <- data[-ind,]
     
     if (k == "Auto"){
       k <- round(sqrt(nrow(train) + nrow(test)))
