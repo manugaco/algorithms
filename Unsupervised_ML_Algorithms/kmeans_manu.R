@@ -7,7 +7,7 @@
 
 ##Behaviour
 
-#First of all, the algorithm sets a subspace taking the limits of each variable as bounds (x1, x2, ... , xp)
+#First of all, the algorithm sets a subspace taking the limits of each variable as bounds (X1, X2, ... , Xn)
 #Then, k (number of centroids) points are selected randomly inside this subspace.
 #The next step is to compute the distances between each centroid and all the points of the dataset.
 #Then, I relate each point to the closest centroid, creating a cluster, using a distance measurement.
