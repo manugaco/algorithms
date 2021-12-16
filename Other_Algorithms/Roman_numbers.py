@@ -3,126 +3,60 @@
 
 # Support N* (positive natural numbers without including zero)
 
-# Ddictionary of correspondences:
+def get_roman(input):
 
-from _typeshed import IdentityFunction
-from os import CLD_DUMPED, XATTR_SIZE_MAX
-from typing import ValuesView
+    if not isinstance(input, int):
+        exit('Input must be a positive an bigger than 0 integer')
+    # Dictionary of correspondences:
+    corr = {1: 'I',
+            5: 'V',
+            10: 'X',
+            50: 'L',
+            100: 'C', 
+            500: 'D',
+            1000: 'M',
+            5000: '_V',
+            10000: '_X',
+            50000: '_L',
+            100000: '_C',
+            500000: '_D',
+            1000000: '_M'}
+    # List of separated numbers in string format of the original integer:
+    num_str = [leter for leter in str(input)]
 
+    # List of separated numbers in integer format of the original integer:
+    num_int = [int(num) for num in str(input)]
 
-corr = {1: 'I',
-        5: 'V',
-        10: 'X',
-        50: 'L',
-        100: 'C', 
-        500: 'D',
-        1000: 'M'}
+    # List of decreasing Naturals:
+    ind_exp = []
+    for i in range(len(num_str)):
+        ind_exp.append((len(num_str) - i)-1)
 
-cor_list = ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+    # List of decreasing decimal system numbers asociated with the original number: 
+    segs = []
+    for i in range(len(num_str)):
+        segs.append(int(num_str[i]) * (10 ** ind_exp[i]))
+
+    fin = []
+    for i in range(len(ind_exp)):
+        output = []
+        if(num_int[i]!= 0):
+            
+            output.append(str(corr.get(10 ** ind_exp[i])))
+            output.append(str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i])))
+            output.append(str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i])))
+            output.append(str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i]*5)))
+            output.append(str(corr.get(10 ** ind_exp[i]*5)))
+            output.append(str(corr.get(10 ** ind_exp[i]*5))+str(corr.get(10 ** ind_exp[i])))
+            output.append(str(corr.get(10 ** ind_exp[i]*5))+str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i])))
+            output.append(str(corr.get(10 ** ind_exp[i]*5))+str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i])))
+            output.append(str(corr.get(10 ** ind_exp[i]))+str(corr.get(10 ** ind_exp[i]*10)))
+            fin.append(output[num_int[i]-1])
+        else:
+            fin.append('')
+
+    return(''.join(fin))
 
 # Example:
 
-# 675 (DCLXXV)
-
-input = 675
-
-num_str = [leter for leter in str(input)]
-num_str
-
-num_int = [int(num) for num in str(input)]
-num_int
-
-ind_exp = []
-for i in range(len(num_str)):
-    ind_exp.append((len(num_str) - i)-1)
-
-ind_exp
-
-segs = []
-for i in range(len(num_str)):
-    segs.append(int(num_str[i]) * (10 ** ind_exp[i]))
-
-segs
-
-corr.get(list(corr)[4 -1])
-
-level = []
-for i in range(10):
-    print(i)
-    print(level)
-    if i == 0:
-        level.append(corr.get(10 ** ind_exp[0]))
-    elif 0 < i <= 3:
-        level.append(corr.get(10 ** ind_exp[0]) + level[i-1])
-    elif i == 4:
-        level.append(corr.get(list(corr)[4-1])) + corr.get(list(corr)[4])
-    elif i == 5:
-        level.append(corr.get(list(corr)[4]))
-    elif 5 < i <= 8:
-        level.append(corr.get(list(corr)[4]) + level[0])
-    elif i == 9:
-
-
-            
-
-    
-
-
-
-
-level = [corr.get(10 ** ind_exp[0]) for n in range(10)]
-level
-
-
-input
-segs
-ind_exp
-
-
-cor_list = ['I', 'V', 'X', 'L', 'C', 'D', 'M']
-i=0
-output = []
-
-
-
-
-1 = I str(0)
-2 = II str(0) + str(0)
-3 = III str(0) + str(0)
-4 = IV str(0) + str(1)
-5 = V str(1)
-6 = VI str(1) + str(0)
-7 = VII str(1) + str(0) + str(0)
-8 = VIII str(1) + str(0) + str(0) + str(0)
-9 = IX str(0) + str(2)
-
-
-20 = XX
-30 = XXX
-40 = XL
-50 = L
-60 = LX
-70 = LXX
-80 = LXXX
-90 = XC
-
-
-
-100 = C
-200 = CC
-300 = CCC
-400 = CD
-500 = D
-600 = DC
-700 = DCC
-800 = DCCC
-900 = CM
-
-
-
-
-
-
-
-
-
+get_roman(60890)
