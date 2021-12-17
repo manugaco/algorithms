@@ -5,8 +5,8 @@
 
 def get_roman(input):
 
-    if not isinstance(input, int):
-        exit('Input must be a positive an bigger than 0 integer')
+    if not isinstance(input, int) or input <= 0:
+        exit('Input must be a positive and bigger than 0 integer')
     # Dictionary of correspondences:
     corr = {1: 'I',
             5: 'V',
