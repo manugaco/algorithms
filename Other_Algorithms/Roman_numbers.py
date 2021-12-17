@@ -5,7 +5,7 @@
 
 def get_roman(input):
 
-    if not isinstance(input, int):
+    if((not isinstance(input, int)) or (input <= 0)):
         exit('Input must be a positive an bigger than 0 integer')
     # Dictionary of correspondences:
     corr = {1: 'I',
@@ -59,4 +59,4 @@ def get_roman(input):
 
 # Example:
 
-get_roman(60890)
+get_roman(0.3)
