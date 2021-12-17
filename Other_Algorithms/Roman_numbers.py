@@ -58,10 +58,5 @@ def get_roman(input):
 
     return(''.join(fin))
 
-# Example:
-
-<<<<<<< HEAD
-get_roman(0.3)
-=======
-get_roman(60890)
->>>>>>> 3728e2cd6bad802b740f8caf090b6b86f71a774d
+# Example 654 = DCLIV:
+get_roman(654)
