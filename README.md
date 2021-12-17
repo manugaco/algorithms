@@ -45,6 +45,7 @@ List of folders:
 - Other algorithms:
 
   - Godel, Escher and Bach, MIMU problem algorithm (Python)
+  - Roman numbers algorithm, get the roman from a given positive integer (Python)
 
 
 
