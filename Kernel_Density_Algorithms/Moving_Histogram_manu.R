@@ -7,6 +7,7 @@
 #all of them compared with an stardard normal.
 
 moving_histogram <- function(x,X,h){
+
   require(ggplot2)
   require(gridExtra)
   n <- length(X)
@@ -43,7 +44,7 @@ moving_histogram <- function(x,X,h){
   return(grid)
 }
 
-sam = 100
+sam = 5000
 X <- rnorm(sam)
 x <- seq(min(X),max(X), len = sam)
 h <- 0.45
