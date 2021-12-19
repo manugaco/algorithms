@@ -3,8 +3,6 @@
 
 import numpy as np
 
-
-
 def PCA(X, n_comp):
     
     # Arguments:
