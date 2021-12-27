@@ -44,8 +44,9 @@ List of folders:
 
 - Other algorithms:
 
-  - Godel, Escher and Bach, MIMU problem algorithm (Python)
-  - Roman numbers algorithm, get the roman from a given positive integer (Python)
-
+  - Godel, Escher and Bach, MIMU problem algorithm (R)
+  - Roman numbers algorithm, get the roman given positive integer (Python)
+  - Triangular matrix (R)
+  - Fibonacci series algorithm, get the nth Fibonacci number given its position (Python)
 
 
