@@ -67,7 +67,7 @@ conditions_fun <- function(x){
   return(aux)
 }
 
-#Validation
+#Validation:
 
 conditions_fun("MI")
 
@@ -75,9 +75,7 @@ conditions_fun(c("MIU", "MII"))
 
 conditions_fun(c("MIUIU", "MIIU",  "MIIII"))
 
-
 #Looks fine... let's integrate in a function:
-
 
 MIMU_problem <- function (input, len){
   

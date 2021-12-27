@@ -1,4 +1,9 @@
-# This function creates a matrix with the 
+# This function creates a squared matrix with the following characteristics:
+
+# Input: parameter of dimensions (k)
+# Algorithm: given the number of dimensions the first row is a vector (v) of size k+1 of ascending integers from 0 to k.
+# Following rows are same length vectors as the previous vector but each new row equals to the t+1 lagged previous vector.
+# Output: Squared matrix (kxk) with recursive integers on each row.
 
 trimat <- function(k){
 
@@ -16,6 +21,7 @@ trimat <- function(k){
     }
   }
 print(mat)
+
 }
 
 trimat(6)
