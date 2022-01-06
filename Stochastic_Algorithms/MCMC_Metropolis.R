@@ -7,7 +7,7 @@ $$logit(\theta) = log\left(\frac{\theta}{1-\theta}\right) = \alpha + \beta \ x$$
 $$\alpha \sim N(0,5)$$
 $$\beta \sim N(0,2)$$
 
-#Defining the data
+#Defining the data sample
 y = c(1, 0, 1, 1, 0, 0)
 x = c(3, 5, 2, 5, 10, 6)
 #First I set up the range of the simulation
@@ -19,7 +19,6 @@ alpha=beta=rep(NA,N)
 #Then I set the initial values of alpha and beta:
 
 h <- length(y)
-set.seed(123)
 
 #This is the function to compute the posterior probability of alpha and beta
 
@@ -34,6 +33,7 @@ post <- function(alpha, beta){
 #This is the metropolis algorithm implementation
 #I set the starting points of the parameters
 
+set.seed(123)
 alpha[1] <- 5
 beta[1] <- 2
 
@@ -58,10 +58,13 @@ var <- rbind(var(alpha), var(beta))
 df <- cbind(mean, var)
 rownames(df) <- c("Alpha", "Beta")
 colnames(df) <- c("Mean", "Variance")
+
+#Table with the simulation results:
+
 kable(df) %>%
   kable_styling(position = "center", bootstrap_options = "striped", full_width = F)
   
-#Plot the results
+#Plot the results:
 
 par(mfrow=c(2,3))
 plot.ts(alpha)
