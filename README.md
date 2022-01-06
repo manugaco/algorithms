@@ -44,7 +44,7 @@ List of folders:
   - MCMC Metropolis algorithm (R, Python)
   - MCMC Metropolis-Hastings algorithm (R, Python)
 
-- Other algorithms:
+- Other algorithms (own creations):
 
   - Godel, Escher and Bach, MIMU problem algorithm (R)
   - Roman numbers algorithm, get the roman given positive integer (Python)
