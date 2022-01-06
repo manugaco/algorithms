@@ -48,7 +48,7 @@ List of folders:
 
   - Godel, Escher and Bach, MIMU problem algorithm (R)
   - Roman numbers algorithm, get the roman given positive integer (Python)
-  - Triangular matrix (R)
+  - Triangular unordered matrix (R)
   - Fibonacci series algorithm, get the nth Fibonacci number given its position (Python)
 
 
