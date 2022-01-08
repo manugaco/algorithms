@@ -10,8 +10,8 @@ def f_mean(x):
     return sum(x) / float(len(x))
 
 def f_mse(a, p):
+    
     s_error = []
-
     if len(a) != len(p):
         exit("Error, actual and predicted values vectors must have same length.")
     else:
@@ -27,10 +27,12 @@ def f_ols_fit(df_train, target):
     # Shaping input:
     X = np.array(df_train.drop(target, axis=1))
     y = np.array(df_train[target])
+    
     # Adding Bias (vector of 1's):
     X = np.concatenate((np.ones((X.shape[0], 1)), X), axis=1)
+    
     # Estimating coeficients; b=(X'X)⁻1*X'y
-    # Moore-Penrose pseudoinverse is used.
+    # Moore-Penrose pseudoinverse matrix is used.
     coefs = np.dot(np.linalg.pinv(np.dot(X.T, X)), np.dot(X.T, y))
     fit = np.dot(X, coefs)
 
@@ -66,7 +68,6 @@ f_mse(y, y_pred)
 X = np.array([[2, 3, 2], [3, 5, 2], [2, 2, 6]])
 df_test = pd.DataFrame(X).rename(columns={0:'X1', 1:'X2', 2:'X3'})
 
-df_train
 f_ols_predict(df_test, coefs)
 
 # Testing the functions with real world data (fit and predict):
