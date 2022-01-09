@@ -51,9 +51,10 @@ def knn_manu(X_train, y_train, X_test, k='Auto'):
   return newlabs
 
 #Synthetic data:
+
 set.seed(123)
-df = pd.DataFrame(3 + 6*np.random.randn(50, 4))
-df = pd.concat([pd.DataFrame(np.random.randint(0, 2, 50)), df], axis=1)
+df = pd.DataFrame(3 + 6*np.random.randn(100, 4))
+df = pd.concat([pd.DataFrame(np.random.randint(0, 2, 100)), df], axis=1)
 df.columns = ['Target', 'V1', 'V2', 'V3', 'V4']
 
 X_train, X_test, y_train, y_test = train_test_split(df.drop('Target', axis=1), 
@@ -61,8 +62,8 @@ X_train, X_test, y_train, y_test = train_test_split(df.drop('Target', axis=1),
                                                     test_size=0.2, 
                                                     random_state=123)
 
-
 y_hat = knn_manu(X_train, y_train, X_test, k=6)
+pd.crosstab(np.array(y_test), np.array(y_hat))
 
 # Real life example. Iris dataset:
 
@@ -79,3 +80,4 @@ X_train, X_test, y_train, y_test = train_test_split(df_iris.drop('Target', axis=
                                                     random_state=123)
 
 y_hat = knn_manu(X_train, y_train, X_test, k=6)
+pd.crosstab(np.array(y_test), np.array(y_hat))
