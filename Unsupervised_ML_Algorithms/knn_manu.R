@@ -1,128 +1,63 @@
 
-#The algorithm is designed to perform split validation automatically,
-#but it also works over the whole dataset.
-#it works by selecting those "k" closests points to each on the test set,
-#and it does select and assign the most repeated category
-#to the corresponding point on the test set (or in the whole dataset).
-#It prints the confusion matrix and some accuracy metrics if required
-#(TRUE by default), unless the confusion matrix is not squared.
-#Then, it does not print the previous information.
+# Knn function:
 
+knn_manu <- function(x_train, y_train, x_test, k="Auto") {
 
-#Iris dataset example.
-data(iris)
+  # Args:
+  # X_train = Training features set.
+  # y_train = Training target labels.
+  # X_test = Test Features.
+  # k = Number of Neightbours.
 
-data <- iris
-
-#Implementation of knn (R)
-
-knn_manu <- function(data, splitmode = TRUE, k="Auto", splitTT=0.75, Acc = TRUE){
-
-  #Avoid more than one factor variable
-
-  nonum <- 0
-  for (i in seq_len(data)) {
-    if (class(data[, i]) != "numeric") {
-      nonum <- nonum + 1
-    }
-  }
-
-  if (nonum > 1) {
-    stop("There is more than one grouping variable.")
-  }
-
-  #Detect labels variable (convert to factor)
-
-  for (i in seq_len(data)) {
-    if (class(data[, i]) != "numeric") {
-      data[, i] <- as.factor(data[, i])
-      ind_fact <- i
-    }
-  }
-
-  if (splitmode == TRUE) {
-
-    #Divide in train and test
-
-    ind <- sample(1:nrow(data), size = round(splitTT * nrow(data)))
-    train <- data[ind, ]
-    test <- data[-ind, ]
-
-    if (k == "Auto") {
-      k <- round(sqrt(nrow(train) + nrow(test)))
-    }
-
-    #Algorithm body
-
-    distmat <- matrix(0, ncol = nrow(test), nrow = nrow(train))
-    newlabs <- c()
-
-    for (i in seq_len(test)) {
-      dist <- numeric()
-      for (j in seq_len(train)) {
-        dist[j] <- sqrt((sum(test[i, -ind_fact] - train[j, -ind_fact]))^2)
-      }
-      distmat[, i] <- dist
-      ord <- order(distmat[, i])
-      ordind <- ord[1:k]
-      data[ordind, ind_fact]
-      #Selected category
-      newlabs[i] <- names(sort(table(data[ordind, ind_fact]),
-                    decreasing = TRUE)[1])
-    }
-
-    results <- list(distmat, newlabs)
-    confmat <- table(newlabs, test[,ind_fact])
-
-    if (Acc == TRUE && (ncol(confmat)==nrow(confmat))){
-      acc <- sum(confmat[row(confmat) == col(confmat)]) / (sum(confmat[row(confmat) != col(confmat)]) + sum(confmat[row(confmat) == col(confmat)]))
-      results[[3]] <- paste("Accuracy", acc, sep = " ")
-    }
-
-    return(results)
-    
-  }else{
-    
-    if (k == "Auto"){
+  #k automatic selection:
+  if (k == "Auto") {
       k <- round(sqrt(nrow(data)))
     }
-    
-    #algorithm body
-    
-    distmat <- matrix(0, ncol = (nrow(data)), nrow = (nrow(data)))
-    newlabs <- c()
-    
-    for(i in 1:nrow(data)){
-      dist <- numeric()
-      for(j in 1:nrow(data)){
-        if(i != j){
-        dist[j] <- sqrt((sum(data[i,-ind_fact] - data[j,-ind_fact]))^2)
-        }else{
-        dist[j] <- 99999999999
-        }
-      } 
-      distmat[i,] <- dist
-      ord <- order(distmat[i,])
-      ordind <- ord[1:k]
-      data[ordind,ind_fact]
-      #Selected category
-      newlabs[i] <- names(sort(table(data[ordind,ind_fact]),decreasing=TRUE)[1]) 
-    }
-    
-    results <- list(distmat, newlabs)
-    
-    confmat <- table(newlabs, data[,ind_fact])
-    
-    if(Acc == TRUE && (ncol(confmat)==nrow(confmat))){
-      acc <- sum(confmat[row(confmat) == col(confmat)])/(sum(confmat[row(confmat) != col(confmat)]) + sum(confmat[row(confmat) == col(confmat)]))
-      results[[3]] <- paste("Accuracy", acc, sep = " ")
-    }
-    
-    return(results)
+
+  # Odd number of neightbours:
+  if ((k %% 2) == 0) {
+      k <- k + 1
   }
-  
-} #Knn function
 
-results <- knn_manu(iris, splitmode = TRUE, splitTT = 0.5, Acc = TRUE)
+  #Algorithm body:
+  distmat <- matrix(0, ncol = (nrow(x_train)), nrow = (nrow(x_test)))
+  for (i in seq_len(nrow(x_test))) {
+    dist <- numeric()
+    for (j in seq_len(nrow(x_train))) {
+      dist[j] <- sqrt((sum(x_test[i, ] - x_train[j, ]))^2)
+      }
+    distmat[i, ] <- dist
+    }
 
+  #Distances dataframe:
+  df_dist <- data.frame(distmat)
+  colnames(df_dist) <- rownames(x_train)
+  rownames(df_dist) <- rownames(x_test)
 
+  #Computing the predicted labels (y_hat):
+  newlabs <- c()
+  for (i in seq_len(nrow(x_test))) {
+      keep_ind <- colnames(sort(df_dist[i, ])[, 1:k])
+      vals <- data.frame(table(y_train[keep_ind, ]))
+      newlabs[i] <- as.character(vals[order(vals$Freq,
+                          decreasing = TRUE), ][1, 1])
+  }
+
+  return(newlabs)
+}
+
+#Iris dataset example.
+
+data(iris)
+data <- iris
+
+ind <- sample(seq_len(nrow(iris)), size = nrow(iris) * 0.2)
+train <- iris[-ind, ]
+test <- iris[ind, ]
+x_train <- subset(train, select = -c(Species))
+y_train <- subset(train, select = c(Species))
+x_test <- subset(test, select = -c(Species))
+y_test <- subset(test, select = c(Species))
+
+y_hat <- knn_manu(x_train, y_train, x_test, k = 6)
+table(y_test$Species, y_hat)
