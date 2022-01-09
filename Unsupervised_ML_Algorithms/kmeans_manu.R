@@ -28,9 +28,8 @@
 
 #Future improvements
 
-#Stop the while loop when the centroids do not move.
-#Optimal number of centroids (elbow chart)
-#Dynamic chart using plotly
+#Convergence.
+#Optimal number of centroids.
 
 kmeans_manu <- function(input, k=2, method = "Euclidean", iter = 50, config = 10){
   
@@ -295,31 +294,6 @@ kmeans_manu <- function(input, k=2, method = "Euclidean", iter = 50, config = 10
 
 #In order to test the algorithm, I am going to use a random clusters generator, using a multinomal distribution.
 
-generator1 <- function(){
-  n1 <- sample(50:200, 1)
-  mu1<-c(runif(1, -100, 100), runif(1, -100, 100))
-  Sigma1<-matrix(c(sample(15:50, 1),10,10,sample(15:50, 1)),2,2)
-  n2 <- sample(50:200, 1)
-  mu2<-c(runif(1, -100, 100), runif(1, -100, 100))
-  Sigma2<-matrix(c(sample(15:50, 1),-10,-10,sample(15:50, 1)),2,2)
-  n3 <- sample(50:200, 1)
-  mu3<-c(runif(1, -100, 100), runif(1, -100, 100))
-  Sigma3<-matrix(c(sample(15:50, 1),15,15,sample(15:50, 1)),2,2)
-  n4 <- sample(50:200, 1)
-  mu4<-c(runif(1, -100, 100), runif(1, -100, 100))
-  Sigma4<-matrix(c(sample(15:50, 1),5,5,sample(15:50, 1)),2,2)
-  
-  library(MASS)
-  
-  y1<-mvrnorm(n1, mu1, Sigma1)
-  y2<-mvrnorm(n2, mu2, Sigma2)
-  y3<-mvrnorm(n3, mu3, Sigma3)
-  y4<-mvrnorm(n4, mu4, Sigma4)
-  input <<-rbind(y1, y2, y3, y4)
-   plot <- plot(input)
-   print(plot)
-}
 
-generator1()
 
 kmeans_manu(input)

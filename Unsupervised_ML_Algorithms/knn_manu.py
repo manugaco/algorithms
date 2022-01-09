@@ -1,7 +1,6 @@
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 
@@ -64,4 +63,5 @@ X_train, X_test, y_train, y_test = train_test_split(df_iris.drop('Target', axis=
                                                     random_state=123)
 
 y_hat = knn_manu(X_train, y_train, X_test, k=6)
-pd.crosstab(np.array(y_test), np.array(y_hat))
+c_mat = pd.crosstab(y_test.rename('Actual').reset_index(drop=True), pd.Series(y_hat).rename('Predicted'))
+c_mat

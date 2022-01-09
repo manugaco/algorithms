@@ -60,4 +60,5 @@ x_test <- subset(test, select = -c(Species))
 y_test <- subset(test, select = c(Species))
 
 y_hat <- knn_manu(x_train, y_train, x_test, k = 6)
-table(y_test$Species, y_hat)
+c_mat <- table(y_test$Species, y_hat, dnn = c("Actual", "Predicted"))
+c_mat

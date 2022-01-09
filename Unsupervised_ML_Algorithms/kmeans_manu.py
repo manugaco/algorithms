@@ -20,14 +20,15 @@ import seaborn as sns
 import random
 import traceback
 from random import sample
+from sklearn.datasets import load_iris
 import math
 
 #Function
 
 def kmeans_manu(data, k, niter = 50, dist = "euclidean", plot_PCA = False):
      
-     col = data.shape[1]
-     nrow = data.shape[0]
+    ncol = data.shape[1]
+    nrow = data.shape[0]
     
     if dist == "euclidean":
         
@@ -164,7 +165,7 @@ def kmeans_manu(data, k, niter = 50, dist = "euclidean", plot_PCA = False):
         data_c = pd.concat([data_df.reset_index(drop=True), clus_df], axis=1)
         data_clus = data_c.values
 
-        for h in range(1, niter):
+        for k in range(1, niter):
             #Recompute centroids
             cent = np.zeros(shape=(k, ncol))
             for i in range(0, ncol):
@@ -188,6 +189,6 @@ def kmeans_manu(data, k, niter = 50, dist = "euclidean", plot_PCA = False):
 
 #Example
 
-k=4
-
-kmeans_manu(data, k, niter = 50, dist = "manhattan")
+data = load_iris()
+df_features = pd.DataFrame(data.data, columns = data.feature_names)
+kmeans_manu(df_features, k=4, niter = 50, dist = "manhattan")
