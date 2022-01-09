@@ -13,22 +13,15 @@ require(ggplot2)
 require(dplyr)
 options(warn = -1)
 
-#Function:
+#k-means Function:
 
-kmeans_manu <- function(data,
-                        k,
-                        method = "Euclidean",
-                        niter = 50,
-                        config = 10) {
+kmeans_manu <- function(data, k, niter = 50, metric = "Euclidean") {
 
   #k value sanity check:
   if (k < 2) {
-    stop("Number of clusters must be higher than 1")
-  }
+    stop("Number of clusters must be higher than 1")}
 
-  ncol <- ncol(data)
-  nrow <- nrow(data)
-
+  #Algorithm body:
   #Initial centroids:
 
   subspace_tab <- matrix(0, ncol = ncol(data), nrow = 2)
