@@ -1,227 +1,214 @@
-#My kmeans algorithm
+# K-means implementation in R.
+# - The input of the function takes the following arguments:
+#     - Features dataframe.
+#     - Number of centroids "k".
+#     - Number of iterations to compute, (default 100).
+#     - Type of distance (euclidean, squared euclidean or manhattan).
+# - The output of the function is:
+#     - Dataframe with original data and the associated centroid.
 
-##Algorithm description
+#Libraries:
 
-#kmeans algorithm belongs to the family of unsupervised machine learning algorithms
-#The purpose of it is to find groups of similar features on data, without previous information
+require(ggplot2)
+require(dplyr)
+options(warn = -1)
 
-##Behaviour
+#Function:
 
-#First of all, the algorithm sets a subspace taking the limits of each variable as bounds (X1, X2, ... , Xn)
-#Then, k (number of centroids) points are selected randomly inside this subspace.
-#The next step is to compute the distances between each centroid and all the points of the dataset.
-#Then, I relate each point to the closest centroid, creating a cluster, using a distance measurement.
-#Once all the points are related to its respective centroid, I compute the mean point for each variable in each cluster.
-#And I get a new position for the centroid.
-#This process is repeated n times (can be improved)
-#It can happen that a centroid may not find any point close to it, to solve this, I repeate the process of launching centroids
-#m times, and I choose that configuration with the minimum distance at the end of the previous process
-#This procedure also gives me a better best accurary computing the centroids
+kmeans_manu <- function(data,
+                        k=2,
+                        method = "Euclidean",
+                        niter = 50,
+                        config = 10) {
 
-##Features
-
-#The algorithm can compute clusters for p dimensions matrices, but it will only plot the clusters if the input is bidimensional
-#The number of centroids by default is 2, but the parameter can be changed to any number
-#It has three kinds of distances measurements (Euclidean, Euclidean squared and Manhattan)
-#The number of iterations is set to 50 by default
-#It has also initial configurations in order to launch the optimal position of centroids at the beginning
-
-#Future improvements
-
-#Convergence.
-#Optimal number of centroids.
-
-kmeans_manu <- function(input, k=2, method = "Euclidean", iter = 50, config = 10){
-  
-  require(ggplot2)
-  require(dplyr)
-  
-  #k is set to 2 by default
-  if(k<2){
+  #k value sanity check:
+  if (k < 2) {
     stop("Number of clusters must be higher than 1")
   }
-  
-  if(ncol(input) > 2){
-    print("The results will not be displayed")
+
+  ncol <- ncol(data)
+  nrow <- nrow(data)
+
+  #Initial centroids:
+
+  subspace_tab <- matrix(0, ncol = ncol(input), nrow = 2)
+  for (i in seq_len(ncol(input))) {
+  subspace_tab[1, i] <- min(input[, i])
+  subspace_tab[2, i] <- max(input[, i])
   }
-  options(warn=-1)
-  #Computing centroids
-  
-  #Defining subspace
-  
-  subspace_tab <- matrix(0, ncol=ncol(input), nrow = 2)
-  for(i in 1:ncol(input)){
-  subspace_tab[1,i] <- min(input[,i])
-  subspace_tab[2,i] <- max(input[,i])
-  }
-  
-  mean_col <- function(m){
-  for(i in 1:ncol(m)){
-    new[i] <- mean(m[,i])
+
+  mean_col <- function(m) {
+  for (i in seq_len(ncol(m))) {
+    new[i] <- mean(m[, i])
   }
   new <<- new
 }
-  
-  for(n in 1:config){
-    
-  #Initializing objects
-    
-  centroids_ini <- matrix(0, nrow=k, ncol=ncol(input))
-  list_centroids <- list()
-  distances <- data.frame(matrix(0, nrow = nrow(input), ncol = k))
-  names <- vector(mode = "numeric", length = length(k))
-  colcent <- data.frame(matrix(0, ncol = 1, nrow = nrow(input)))
-  colnames(colcent) <- "Centroid"
-  inputdf <- data.frame(input)
-  new <- matrix(0, nrow= 1, ncol= ncol(input))
 
-  
+  for (n in 1:config) {
+
+  #Initializing objects
+
+    centroids_ini <- matrix(0, nrow = k, ncol = ncol(input))
+    list_centroids <- list()
+    distances <- data.frame(matrix(0, nrow = nrow(input), ncol = k))
+    names <- vector(mode = "numeric", length = length(k))
+    colcent <- data.frame(matrix(0, ncol = 1, nrow = nrow(input)))
+    colnames(colcent) <- "Centroid"
+    inputdf <- data.frame(input)
+    new <- matrix(0, nrow = 1, ncol = ncol(input))
+
   #Computing centroids
-    for(i in 1:ncol(subspace_tab)){
-      for(j in 1:nrow(centroids_ini)){
-      centroids_ini[,i] <- runif(k, min=min(subspace_tab[,i]), max=max(subspace_tab[,i]))
+    for (i in seq_len(ncol(subspace_tab))) {
+      for (j in seq_len(nrow(centroids_ini))) {
+      centroids_ini[, i] <- runif(k,
+                                  min = min(subspace_tab[, i]),
+                                  max = max(subspace_tab[, i]))
       }
     }
-  
+
   #Main loop
-  
-  n_iter=0
-  while(n_iter <= iter){
-  
+  iter <- 0
+  while (iter < n_iter) {
+
   #Distances
-  
-  if(method == "Euclidean"){
-    for(i in 1:nrow(inputdf)){
-      for(j in 1:nrow(centroids_ini)){
-        distances[i,j] <- sqrt(sum((input[i,] - centroids_ini[j,])^2))
+  if (method == "Euclidean") {
+    for (i in seq_len(nrow(inputdf))) {
+      for (j in seq_len(nrow(centroids_ini))) {
+        distances[i, j] <- sqrt(sum((input[i, ] - centroids_ini[j, ])^2))
       }
     }
-  } else if(method == "Euclidean_sq"){
-    for(i in 1:nrow(inputdf)){
-      for(j in 1:nrow(centroids_ini)){
-        distances[i,j] <- sum((input[i,] - centroids_ini[j,])^2)
+  } else if (method == "Euclidean_sq") {
+    for (i in seq_len(nrow(inputdf))) {
+      for (j in seq_len(nrow(centroids_ini))) {
+        distances[i, j] <- sum((input[i, ] - centroids_ini[j, ])^2)
       }
     }
-  } else if(method == "Manhattan"){
-    for(i in 1:nrow(inputdf)){
-      for(j in 1:nrow(centroids_ini)){
-        distances[i,j] <- sum(abs(input[i,] - centroids_ini[j,]))
+  } else if (method == "Manhattan") {
+    for (i in seq_len(nrow(inputdf))) {
+      for (j in seq_len(nrow(centroids_ini))) {
+        distances[i, j] <- sum(abs(input[i, ] - centroids_ini[j, ]))
       }
     }
   }
-  
+
   #Naming the distances matrix
-  
-  for(i in 1:k){
-   names[i] <- paste("k", i, sep="")
+  for (i in 1:k) {
+   names[i] <- paste("k", i, sep = "")
   }
   colnames(distances) <- names
-  
+
   #Assigning the points to centroids
-  
-  for(i in 1:nrow(distances)){
-      colcent[i,] <- min(distances[i,])
+  for (i in seq_len(nrow(distances))) {
+      colcent[i, ] <- min(distances[i, ])
   }
 
-  for(i in 1:ncol(distances)){
-    for(j in 1:nrow(distances)){
-      if(colcent[j,1] == distances[j,i]){
-        colcent[j,1] <- paste("k", i, sep = "")
+  for (i in seq_len(ncol(distances))) {
+    for (j in seq_len(nrow(distances))) {
+      if (colcent[j, 1] == distances[j, i]) {
+        colcent[j, 1] <- paste("k", i, sep = "")
       }
     }
   }
-  
-  inputdf <- data.frame(cbind(input,colcent), stringsAsFactors = TRUE)
+
+  inputdf <- data.frame(cbind(input, colcent), stringsAsFactors = TRUE)
 
   #New centroids
-  
-  #Computing means for each element of the list, and storing it in a new centroid matrix
-  centroids_ini <- matrix(0, nrow=nrow(centroids_ini), ncol=ncol(centroids_ini))
-  list_centroids <- split(inputdf, f=inputdf$Centroid)
-  
-  if(length(list_centroids) < k){
+
+  #Computing means for each element of the list,
+  #and storing it in a new centroid matrix
+  centroids_ini <- matrix(0,
+                          nrow = nrow(centroids_ini),
+                          ncol = ncol(centroids_ini))
+  list_centroids <- split(inputdf, f = inputdf$Centroid)
+
+  if (length(list_centroids) < k) {
     break
-  }else if(length(list_centroids) == k){
-    for(i in 1:k){
-    dot <- matrix(as.numeric(as.character(unlist(list_centroids[[i]]))), ncol = ncol(inputdf))
-    dot <- dot[,-c(length(inputdf))]
-    centroids_ini[i,] <- mean_col(dot)
+  }else if (length(list_centroids) == k) {
+    for (i in 1:k) {
+    dot <- matrix(
+      as.numeric(
+        as.character(
+          unlist(list_centroids[[i]]
+          )
+          )
+          ),
+          ncol = ncol(inputdf))
+    dot <- dot[, -c(length(inputdf))]
+    centroids_ini[i, ] <- mean_col(dot)
     }
   }
   #Finished iterations
-  n_iter = n_iter + 1
+  n_iter <- n_iter + 1
   }
-  
+
   #Computing minimum distance of each configuration
-  
+
     dist_aux <- sum(distances)
     coord_aux <- centroids_ini
-  
-  if(n == 1L){
+
+  if (n == 1L) {
     dist <- dist_aux
     centroids_fin <- coord_aux
   }
-  
-  if(dist > dist_aux){
+
+  if (dist > dist_aux) {
     dist <- dist_aux
     centroids_fin <- coord_aux
   }
-  
+
 }#Optimization of the centroids initial position
-  
-#Launching Kmeans with optimal centroids  
-  
+
+#Launching Kmeans with optimal centroids
+
   #Initializing all objects
-  
-  n_iter = 0
+
+  n_iter <- 0
   distances <- data.frame(matrix(0, nrow = nrow(input), ncol = k))
   inputdf2 <- data.frame(input)
-  
+
   #First plot
-  if(ncol(input) == 2){
-    p1 <- ggplot(inputdf2, aes(x=X1, y=X2)) +
+  if (ncol(input) == 2) {
+    p1 <- ggplot(inputdf2, aes(x = X1, y = X2)) +
       geom_point() +
       ggtitle("Input data")
-    
     print(p1)
   }
-  
-  while(n_iter <= iter){
-    
+
+  while (n_iter <= iter) {
+
     #Distances
-    
-    if(method == "Euclidean"){
-      for(i in 1:nrow(inputdf2)){
-        for(j in 1:nrow(centroids_fin)){
-          distances[i,j] <- sqrt(sum((input[i,] - centroids_fin[j,])^2))
+    if (method == "Euclidean") {
+      for (i in seq_len(nrow(inputdf2))) {
+        for (j in seq_len(nrow(centroids_fin))) {
+          distances[i, j] <- sqrt(sum((input[i, ] - centroids_fin[j, ])^2))
         }
       }
-    } else if(method == "Euclidean_sq"){
-      for(i in 1:nrow(inputdf2)){
-        for(j in 1:nrow(centroids_fin)){
-          distances[i,j] <- sum((input[i,] - centroids_fin[j,])^2)
+    } else if (method == "Euclidean_sq") {
+      for (i in seq_len(nrow(inputdf2))) {
+        for (j in seq_len(nrow(centroids_fin))) {
+          distances[i, j] <- sum((input[i, ] - centroids_fin[j, ])^2)
         }
       }
-    } else if(method == "Manhattan"){
-      for(i in 1:nrow(inputdf2)){
-        for(j in 1:nrow(centroids_fin)){
-          distances[i,j] <- sum(abs(input[i,] - centroids_fin[j,]))
+    } else if (method == "Manhattan") {
+      for (i in seq_len(nrow(inputdf2))) {
+        for (j in seq_len(nrow(centroids_fin))) {
+          distances[i, j] <- sum(abs(input[i, ] - centroids_fin[j, ]))
         }
       }
     }
-    
+
     #Naming the distances matrix
     names <- vector(mode = "numeric", length = length(k))
-    for(i in 1:k){
-      names[i] <- paste("k", i, sep="")
+    for (i in 1:k) {
+      names[i] <- paste("k", i, sep = "")
     }
     colnames(distances) <- names
-    
+
     #Assigning the points to centroids
-    
+
     colcent <- data.frame(matrix(0, ncol = 1, nrow = nrow(input)))
     colnames(colcent) <- "Centroid"
-    
+
     for(i in 1:nrow(distances)){
       colcent[i,] <- min(distances[i,])
     }
