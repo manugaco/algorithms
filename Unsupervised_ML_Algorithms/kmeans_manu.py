@@ -11,91 +11,59 @@
 
 import pandas as pd
 import numpy as np
-from random import sample
 from sklearn.datasets import load_iris
 
-#Function:
+#k-means Function:
 
-def kmeans_manu(data, k, niter = 50, dist = "euclidean"):
+def kmeans_manu(data, k, niter = 50, metric = "euclidean"):
     
     #k value sanity check:
     if (k < 2):
         exit('Number of clusters must be higher than 1')
 
-    ncol = data.shape[1]
-    nrow = data.shape[0]
-    
+    #Algorithm body:
     #Initial centroids:
-    
-    cent_ls = []
-    cent = np.zeros(shape = (k, ncol))
+    cent = []
+    for i in range(0, k):
+        cent_coord = []
+        for j in range(0, data.shape[1]):
+            cent_coord.append(np.random.uniform(data.iloc[:,j].min(), data.iloc[:,j].max()))
+        cent.append(cent_coord)
+    cent = np.array(cent)
 
-    for i in range(0, ncol):
-        cent[:,i] = sample(tuple(data[:,i]), k)
-    cent_ls.append(cent)
-    
-    #Distances from observations to centroids
-    dist_ls = []
-    clus = []
-    dist = np.zeros(shape=(nrow, k))
-
-    for i in range(0, (nrow)):
-        for j in range(0, (ncol-1)):
-
-            #Distance metric:
-            if dist == "Euclidean":
-                dist[i, j] = np.sqrt((sum(data.iloc[i, :] - cent.iloc[j, :]))**2)
-            if dist == "Euclidean_sq":
-                dist[i, j] = (sum(data.iloc[i, :] - cent.iloc[j, :]))**2
-            if dist == "Manhattan":
-                dist[i, j] = sum(abs(data.iloc[i, :] - cent.iloc[j, :]))
-
-        clus.append(np.argmin(dist[i, :]))
-        
-    dist_ls.append(dist)
-    data_df = pd.DataFrame(data)
-    clus_df = pd.DataFrame(clus)
-    data_c = pd.concat([data_df.reset_index(drop = True), clus_df], axis = 1)
-
+    #Distances from observations to centroids:
     iter = 0
     while iter < niter:
-    
-        #Recompute centroids
-        cent_ls = []
-        cent = np.zeros(shape=(k, ncol))
-        for i in range(0, ncol):
-            cent[:, i] = sample(tuple(data.iloc[:, i]), k)
-        cent_ls.append(cent)
-        
-        #Recompute distances
-        
-        dist = np.zeros(shape=(nrow, k))
-        clus = []
-        for i in range(0, (nrow)):
-            for j in range(0, (ncol-1)):
+        dist_ls = []
+
+        #Compute distances between centroids and datapoints:
+        for i in range(data.shape[0]):
+            dist = []
+            for j in range(len(cent)):
 
                 #Distance metric:
-                if dist == "euclidean":
-                    dist[i, j] = np.sqrt((sum(data.iloc[i, :] - cent.iloc[j, :]))**2)
-                if dist == "euclidean squared":
-                    dist[i, j] = (sum(data.iloc[i, :] - cent.iloc[j, :]))**2
-                if dist == "manhattan":
-                    dist[i, j] = sum(abs(data.iloc[i, :] - cent.iloc[j, :]))
-            clus.append(np.argmin(dist[i,:]))
+                if metric == "euclidean":
+                    dist.append(np.sqrt((sum(np.array(data.iloc[i,:]) - cent[j]))**2))
+                if metric == "euclidean squared":
+                    dist.append(sum(np.array(data.iloc[i,:]) - cent[j])**2)
+                if metric == "manhattan":
+                    dist.append(sum(np.array(data.iloc[i,:]) - cent[j]))
+            dist_ls.append(dist)
 
-        dist_ls.append(dist)
-        data_df = pd.DataFrame(data)
-        clus_df = pd.DataFrame(clus)
-        data_c = pd.concat([data_df.reset_index(drop=True), clus_df], axis=1)
-
-        iter = iter + 1
+        df_dist = pd.DataFrame(dist_ls)
+        data_c = pd.concat([data, 
+                            df_dist.idxmin(axis=1)], 
+                            axis=1).rename(columns={0:'Clusters'})
         
+        #Recompute centroids by mean:
+        cent = np.array(data_c.groupby('Clusters').mean())
+        iter = iter+1
+
     return(data_c)
 
-    
+#Iris Dataset Example:
 
-#Example
-
-data = load_iris()
-df_features = pd.DataFrame(data.data, columns = data.feature_names)
-kmeans_manu(df_features, k = 4, niter = 50, dist = "manhattan")
+iris = load_iris()
+data = pd.DataFrame(iris.data, columns = iris.feature_names)
+results = kmeans_manu(data, k = 3, niter = 10, metric = "euclidean")
+pd.crosstab(np.array(results['Clusters']), iris.target)

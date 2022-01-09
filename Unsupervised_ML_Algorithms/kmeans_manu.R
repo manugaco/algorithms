@@ -16,7 +16,7 @@ options(warn = -1)
 #Function:
 
 kmeans_manu <- function(data,
-                        k=2,
+                        k,
                         method = "Euclidean",
                         niter = 50,
                         config = 10) {
@@ -31,10 +31,10 @@ kmeans_manu <- function(data,
 
   #Initial centroids:
 
-  subspace_tab <- matrix(0, ncol = ncol(input), nrow = 2)
-  for (i in seq_len(ncol(input))) {
-  subspace_tab[1, i] <- min(input[, i])
-  subspace_tab[2, i] <- max(input[, i])
+  subspace_tab <- matrix(0, ncol = ncol(data), nrow = 2)
+  for (i in seq_len(ncol(data))) {
+  subspace_tab[1, i] <- min(data[, i])
+  subspace_tab[2, i] <- max(data[, i])
   }
 
   mean_col <- function(m) {
@@ -48,14 +48,14 @@ kmeans_manu <- function(data,
 
   #Initializing objects
 
-    centroids_ini <- matrix(0, nrow = k, ncol = ncol(input))
+    centroids_ini <- matrix(0, nrow = k, ncol = ncol(data))
     list_centroids <- list()
-    distances <- data.frame(matrix(0, nrow = nrow(input), ncol = k))
+    distances <- data.frame(matrix(0, nrow = nrow(data), ncol = k))
     names <- vector(mode = "numeric", length = length(k))
-    colcent <- data.frame(matrix(0, ncol = 1, nrow = nrow(input)))
+    colcent <- data.frame(matrix(0, ncol = 1, nrow = nrow(data)))
     colnames(colcent) <- "Centroid"
-    inputdf <- data.frame(input)
-    new <- matrix(0, nrow = 1, ncol = ncol(input))
+    inputdf <- data.frame(data)
+    new <- matrix(0, nrow = 1, ncol = ncol(data))
 
   #Computing centroids
     for (i in seq_len(ncol(subspace_tab))) {
@@ -74,19 +74,19 @@ kmeans_manu <- function(data,
   if (method == "Euclidean") {
     for (i in seq_len(nrow(inputdf))) {
       for (j in seq_len(nrow(centroids_ini))) {
-        distances[i, j] <- sqrt(sum((input[i, ] - centroids_ini[j, ])^2))
+        distances[i, j] <- sqrt(sum((data[i, ] - centroids_ini[j, ])^2))
       }
     }
   } else if (method == "Euclidean_sq") {
     for (i in seq_len(nrow(inputdf))) {
       for (j in seq_len(nrow(centroids_ini))) {
-        distances[i, j] <- sum((input[i, ] - centroids_ini[j, ])^2)
+        distances[i, j] <- sum((data[i, ] - centroids_ini[j, ])^2)
       }
     }
   } else if (method == "Manhattan") {
     for (i in seq_len(nrow(inputdf))) {
       for (j in seq_len(nrow(centroids_ini))) {
-        distances[i, j] <- sum(abs(input[i, ] - centroids_ini[j, ]))
+        distances[i, j] <- sum(abs(data[i, ] - centroids_ini[j, ]))
       }
     }
   }
@@ -110,7 +110,7 @@ kmeans_manu <- function(data,
     }
   }
 
-  inputdf <- data.frame(cbind(input, colcent), stringsAsFactors = TRUE)
+  inputdf <- data.frame(cbind(data, colcent), stringsAsFactors = TRUE)
 
   #New centroids
 
@@ -163,8 +163,8 @@ kmeans_manu <- function(data,
   #Initializing all objects
 
   n_iter <- 0
-  distances <- data.frame(matrix(0, nrow = nrow(input), ncol = k))
-  inputdf2 <- data.frame(input)
+  distances <- data.frame(matrix(0, nrow = nrow(data), ncol = k))
+  inputdf2 <- data.frame(data)
 
   #First plot
   if (ncol(input) == 2) {
@@ -180,19 +180,19 @@ kmeans_manu <- function(data,
     if (method == "Euclidean") {
       for (i in seq_len(nrow(inputdf2))) {
         for (j in seq_len(nrow(centroids_fin))) {
-          distances[i, j] <- sqrt(sum((input[i, ] - centroids_fin[j, ])^2))
+          distances[i, j] <- sqrt(sum((data[i, ] - centroids_fin[j, ])^2))
         }
       }
     } else if (method == "Euclidean_sq") {
       for (i in seq_len(nrow(inputdf2))) {
         for (j in seq_len(nrow(centroids_fin))) {
-          distances[i, j] <- sum((input[i, ] - centroids_fin[j, ])^2)
+          distances[i, j] <- sum((data[i, ] - centroids_fin[j, ])^2)
         }
       }
     } else if (method == "Manhattan") {
       for (i in seq_len(nrow(inputdf2))) {
         for (j in seq_len(nrow(centroids_fin))) {
-          distances[i, j] <- sum(abs(input[i, ] - centroids_fin[j, ]))
+          distances[i, j] <- sum(abs(data[i, ] - centroids_fin[j, ]))
         }
       }
     }
@@ -206,7 +206,7 @@ kmeans_manu <- function(data,
 
     #Assigning the points to centroids
 
-    colcent <- data.frame(matrix(0, ncol = 1, nrow = nrow(input)))
+    colcent <- data.frame(matrix(0, ncol = 1, nrow = nrow(data)))
     colnames(colcent) <- "Centroid"
 
     for(i in 1:nrow(distances)){
