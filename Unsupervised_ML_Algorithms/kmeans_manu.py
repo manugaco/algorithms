@@ -47,7 +47,7 @@ def kmeans_manu(data, k, niter = 50, metric = "euclidean"):
                 if metric == "euclidean squared":
                     dist.append(sum(np.array(data.iloc[i,:]) - cent[j])**2)
                 if metric == "manhattan":
-                    dist.append(sum(np.array(data.iloc[i,:]) - cent[j]))
+                    dist.append(sum(abs(np.array(data.iloc[i,:]) - cent[j])))
                     
             dist_ls.append(dist)
 
