@@ -9,7 +9,6 @@
 
 #Libraries:
 
-require(ggplot2)
 require(dplyr)
 options(warn = -1)
 
@@ -19,7 +18,8 @@ kmeans_manu <- function(data, k, niter = 50, metric = "Euclidean") {
 
   #k value sanity check:
   if (k < 2) {
-    stop("Number of clusters must be higher than 1")}
+    stop("Number of clusters must be higher than 1")
+    }
 
   #Algorithm body:
   #Initial centroids:
@@ -50,7 +50,7 @@ kmeans_manu <- function(data, k, niter = 50, metric = "Euclidean") {
     inputdf <- data.frame(data)
     new <- matrix(0, nrow = 1, ncol = ncol(data))
 
-  #Computing centroids
+  #Initial centroids
     for (i in seq_len(ncol(subspace_tab))) {
       for (j in seq_len(nrow(centroids_ini))) {
       centroids_ini[, i] <- runif(k,
