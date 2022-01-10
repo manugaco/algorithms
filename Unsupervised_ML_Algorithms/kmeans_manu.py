@@ -48,6 +48,7 @@ def kmeans_manu(data, k, niter = 50, metric = "euclidean"):
                     dist.append(sum(np.array(data.iloc[i,:]) - cent[j])**2)
                 if metric == "manhattan":
                     dist.append(sum(np.array(data.iloc[i,:]) - cent[j]))
+                    
             dist_ls.append(dist)
 
         df_dist = pd.DataFrame(dist_ls)
